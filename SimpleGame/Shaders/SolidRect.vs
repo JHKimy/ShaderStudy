@@ -1,7 +1,7 @@
 #version 330
 
 in vec3 a_Position;
-// ; 확인 잘하기
+// ; 확인 잘하기 /  테스트
 
 void main()
 {
