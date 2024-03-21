@@ -1,3 +1,8 @@
+// 1. 컴파일 셰이더
+// 2. 버텍스데이터와 VBO 준비
+// 3. 
+
+
 #include "stdafx.h"
 #include "Renderer.h"
 
@@ -19,6 +24,8 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	//Load shaders
 	m_SolidRectShader = CompileShaders("./Shaders/SolidRect.vs", "./Shaders/SolidRect.fs");
 	
+	m_ParticleShader = CompileShaders("./Shaders/Particle.vs", "./Shaders/Particle.fs");
+
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -49,20 +56,35 @@ void Renderer::CreateVertexBufferObjects()
 
 
 	float vertices[] = { 
-		0.0f, 0.0f, 0.0f, 
-		1.0f, 0.0f, 0.0f, 
-		1.0f, 1.0f, 0.0f };
+			-1.f / 2, -1.f / 2, 0.f, -1.f / 2, 1.f / 2, 0.f, 1.f / 2, 1.f / 2, 0.f, //Triangle1
+		-1.f / 2, -1.f / 2, 0.f,  1.f / 2, 1.f / 2, 0.f, 1.f / 2, -1.f / 2, 0.f, //Triangle2
+
+	};
+
 	// 그릴 폴리곤의 좌표값
 
-	glGenBuffers(1, &m_TestVBO);
-	// VBO의 ID 생성
+	//glGenBuffers(1, &m_TestVBO);
+	//// VBO의 ID 생성
+	//glBindBuffer(GL_ARRAY_BUFFER, m_TestVBO);
+	//// GL_ARRAY_BUFFER란 작업대에 m_TestVBO를 올림
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	//// GL_ARRAY_BUFFER에 올라가 있는 것을 vertices 크기 만큼 vertices 포인터로 긁어서 GL_STATIC_DRAW 목적으로 데이터를 올려라
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_TestVBO);
-	// GL_ARRAY_BUFFER란 작업대에 m_TestVBO를 올림
+	float size = 0.05f;
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	// GL_ARRAY_BUFFER에 올라가 있는 것을 vertices 크기 만큼 vertices 포인터로 긁어서 GL_STATIC_DRAW 목적으로 데이터를 올려라
+	float Particlevertices[] = {
+		-size, -size, 0,
+		 size,  size, 0,
+		-size,  size, 0,
 
+		 size,  size, 0,
+		 size, -size, 0,
+		-size, -size, 0
+	};
+
+	glGenBuffers(1, &m_ParticleVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Particlevertices), Particlevertices, GL_STATIC_DRAW);
 }
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
@@ -170,7 +192,7 @@ GLuint Renderer::CompileShaders(char* filenameVS, char* filenameFS)
 	}
 
 	glUseProgram(ShaderProgram);
-	std::cout << filenameVS << ", " << filenameFS << " Shader compiling is done.";
+	std::cout << filenameVS << ", " << filenameFS << " Shader compiling is done." << std::endl;
 
 	return ShaderProgram;
 }
@@ -191,7 +213,33 @@ void Renderer::DrawTest()
 	glBindBuffer(GL_ARRAY_BUFFER, m_TestVBO);
 	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDisableVertexAttribArray(attribPosition);
+}
+
+void Renderer::DrawParticle()
+{
+	GLuint shader = m_ParticleShader;
+	//Program select
+	glUseProgram(shader);
+	// 호출된 이후로는 이 파티클셰이더 사용
+
+	int ulTime = glGetUniformLocation(shader, "u_Time");
+	// 디버깅했을때 0 나와야함 음수안됨
+
+	glUniform1f(ulTime, m_ParticleTime);
+	m_ParticleTime += 10.f;
+	if (2000 < m_ParticleTime)
+		m_ParticleTime = 0.f;
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleVBO);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	//버텍스 수
 
 	glDisableVertexAttribArray(attribPosition);
 }

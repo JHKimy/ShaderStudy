@@ -13,10 +13,13 @@ public:
 	Renderer(int windowSizeX, int windowSizeY);
 	~Renderer();
 
-	bool IsInitialized();
-	void DrawSolidRect(float x, float y, float z, float size, float r, float g, float b, float a);
+	bool IsInitialized(); 
+	//void DrawSolidRect(float x, float y, float z, float size, float r, float g, float b, float a);
 	
 	void DrawTest();
+	
+	//새로운 함수
+	void DrawParticle();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -35,4 +38,9 @@ private:
 	GLuint m_SolidRectShader = 0;
 
 	GLuint m_TestVBO = 0;
+
+	// 새로운 셰이더 생성
+	GLuint m_ParticleShader = 0;
+	GLuint m_ParticleVBO = 0;
+	float m_ParticleTime = 0.f;
 };
