@@ -38,17 +38,18 @@ void Idle(void)
 
 void MouseInput(int button, int state, int x, int y)
 {
-	RenderScene();
+	// 혹시 모르니 빼주자
+	//RenderScene();
 }
 
 void KeyInput(unsigned char key, int x, int y)
 {
-	RenderScene();
+	//RenderScene();
 }
 
 void SpecialKeyInput(int key, int x, int y)
 {
-	RenderScene();
+	//RenderScene();
 }
 
 int main(int argc, char **argv)

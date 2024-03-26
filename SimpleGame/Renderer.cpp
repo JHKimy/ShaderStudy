@@ -250,13 +250,12 @@ void Renderer::DrawParticle()
 
 	// 디버깅했을때 0 나와야함 음수안됨
 	int ulTime = glGetUniformLocation(shader, "u_Time");
-
 	glUniform1f(ulTime, m_ParticleTime);
-	m_ParticleTime += 10.f;
+	m_ParticleTime += 0.016f;	// 프레임 타임 : 정확하진 않음
 
-	if (2000 < m_ParticleTime)
-		m_ParticleTime = 0.f;
-
+	int ulPeriod = glGetUniformLocation(shader, "u_Period");
+	glUniform1f(ulPeriod, 1.0);
+	
 	int attribPosition = glGetAttribLocation(shader, "a_Position");
 	glEnableVertexAttribArray(attribPosition);
 	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleVBO);
