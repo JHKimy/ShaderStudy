@@ -1,6 +1,8 @@
 // 1. 컴파일 셰이더
 // 2. 버텍스데이터와 VBO 준비
-// 3. 
+// 3. VBO를 작업 테이블에 올리고
+// 4. 작업 테이블에 데이터 올리기 (VBO에)
+// 5. 그리기
 
 
 #include "stdafx.h"
@@ -35,6 +37,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	}
 }
 
+//초기화 여부
 bool Renderer::IsInitialized()
 {
 	return m_Initialized;
@@ -72,6 +75,7 @@ void Renderer::CreateVertexBufferObjects()
 
 	float size = 0.05f;
 
+	// 반시계방향으로 그림
 	float Particlevertices[] = {
 		-size, -size, 0,
 		 size,  size, 0,
@@ -82,11 +86,18 @@ void Renderer::CreateVertexBufferObjects()
 		-size, -size, 0
 	};
 
+	// VBO의 ID값 만들기
 	glGenBuffers(1, &m_ParticleVBO);
+	
+	// VBO의 ID와 바인딩할 데이터의 형식알려주기
+	// VBO를 작업대 위에 올리기
 	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleVBO);
+
+	// 작업대 위에 올려진 것에 데이터 연결
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Particlevertices), Particlevertices, GL_STATIC_DRAW);
 }
 
+// 쉐이더 프로그렘에 쉐이더 추가
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
 {
 	//쉐이더 오브젝트 생성
@@ -100,6 +111,7 @@ void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum S
 	p[0] = pShaderText;
 	GLint Lengths[1];
 	Lengths[0] = strlen(pShaderText);
+
 	//쉐이더 코드를 쉐이더 오브젝트에 할당
 	glShaderSource(ShaderObj, 1, p, Lengths);
 
@@ -122,6 +134,7 @@ void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum S
 	glAttachShader(ShaderProgram, ShaderObj);
 }
 
+// file 읽어서 target에 넣어주기
 bool Renderer::ReadFile(char* filename, std::string *target)
 {
 	std::ifstream file(filename);
@@ -139,11 +152,14 @@ bool Renderer::ReadFile(char* filename, std::string *target)
 	return true;
 }
 
+// 쉐이더 만들기
 GLuint Renderer::CompileShaders(char* filenameVS, char* filenameFS)
 {
-	GLuint ShaderProgram = glCreateProgram(); //빈 쉐이더 프로그램 생성
+	//빈 쉐이더 프로그램 생성
+	GLuint ShaderProgram = glCreateProgram(); 
 
-	if (ShaderProgram == 0) { //쉐이더 프로그램이 만들어졌는지 확인
+	//쉐이더 프로그램이 만들어졌는지 확인
+	if (ShaderProgram == 0) { 
 		fprintf(stderr, "Error creating shader program\n");
 	}
 
@@ -183,20 +199,26 @@ GLuint Renderer::CompileShaders(char* filenameVS, char* filenameFS)
 		return -1;
 	}
 
+	//쉐이더 프로그램이 현재 OpenGL 상태와 호환 되는지 검증
 	glValidateProgram(ShaderProgram);
+	// 검증이 성공했는지 확인
 	glGetProgramiv(ShaderProgram, GL_VALIDATE_STATUS, &Success);
+	// 성공 못하면
 	if (!Success) {
 		glGetProgramInfoLog(ShaderProgram, sizeof(ErrorLog), NULL, ErrorLog);
 		std::cout << filenameVS << ", " << filenameFS << " Error validating shader program\n" << ErrorLog;
 		return -1;
 	}
 
+	// 이 쉐이더를 사용하겠다
+	// 앞으로 이 쉐이더 프로그램으로 렌더링 수행
 	glUseProgram(ShaderProgram);
 	std::cout << filenameVS << ", " << filenameFS << " Shader compiling is done." << std::endl;
 
 	return ShaderProgram;
 }
 
+// 화면 좌표 (x,y)를 OpenGL 좌표계(newX, newY)로 바꿔줌
 void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
 {
 	*newX = x * 2.f / m_WindowSizeX;
@@ -220,16 +242,18 @@ void Renderer::DrawTest()
 
 void Renderer::DrawParticle()
 {
+	// 쉐이더 선택
 	GLuint shader = m_ParticleShader;
-	//Program select
-	glUseProgram(shader);
+	
 	// 호출된 이후로는 이 파티클셰이더 사용
+	glUseProgram(shader);
 
-	int ulTime = glGetUniformLocation(shader, "u_Time");
 	// 디버깅했을때 0 나와야함 음수안됨
+	int ulTime = glGetUniformLocation(shader, "u_Time");
 
 	glUniform1f(ulTime, m_ParticleTime);
 	m_ParticleTime += 10.f;
+
 	if (2000 < m_ParticleTime)
 		m_ParticleTime = 0.f;
 
@@ -238,8 +262,8 @@ void Renderer::DrawParticle()
 	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleVBO);
 	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 
-	glDrawArrays(GL_TRIANGLES, 0, 6);
 	//버텍스 수
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 
 	glDisableVertexAttribArray(attribPosition);
 }
