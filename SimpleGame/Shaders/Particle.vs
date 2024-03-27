@@ -26,7 +26,7 @@ void Basic()
 
 void Line()
 {
-	float newTIme = abs(fract(u_Time / u_Period) - 0.5) * 2.0 ;	// 정수가 되는 순간 0 
+	float newTime = abs(fract(u_Time / u_Period) - 0.5) * 2.0 ;	// 정수가 되는 순간 0 
 	// 수학적으로 식 만들어 계산 후 적용
 	// 시험에도 나올 수 있음
 
@@ -34,7 +34,7 @@ void Line()
 
 	newPosition.xyz = 
 	(c_StartPos + a_Position) + 
-	c_Velocity * newTIme;
+	c_Velocity * newTime;
 
 	newPosition.w = 1;
 	gl_Position = newPosition;

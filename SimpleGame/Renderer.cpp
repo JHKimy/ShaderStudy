@@ -239,7 +239,9 @@ void Renderer::CreateParticleCloud(int numParticles)
 	float size = 0.01f;
 	int particleCount = numParticles;
 	int vertexCount = particleCount * 6;
-	int floatCount = vertexCount * (3 + 1);	// x, y, z, startTime
+
+	int floatCount = vertexCount * (3 + 1 + 3 + 1);
+	// x, y, z, startTime, vx, vy, vz, lifeTime
 
 
 	float* vertices = NULL;
@@ -249,25 +251,22 @@ void Renderer::CreateParticleCloud(int numParticles)
 	for (int i = 0; i < particleCount; i++)
 	{
 		// attribute 하나 더 추가 (시간)
-		float startTime = 1.f * ((float)rand() / (float)RAND_MAX);
+		float startTime = 6.f * ((float)rand() / (float)RAND_MAX);
+
+
+		float vx, vy, vz;
+		float lifeTime;
+
+
+		vx = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		vy = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		vz = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		lifeTime = 4.f  * ((float)rand() / (float)RAND_MAX) + 1.f;
+
+
 		centerX = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
 		centerY = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
 
-		vertices[index] = centerX - size;	index++;
-		vertices[index] = centerY - size;	index++;
-		vertices[index] = 0.f;	index++;
-		vertices[index] = startTime;	index++;
-
-		vertices[index] = centerX + size;	index++;
-		vertices[index] = centerY + size;	index++;
-		vertices[index] = 0.f;	index++;
-		vertices[index] = startTime;	index++;
-
-		vertices[index] = centerX - size;	index++;
-		vertices[index] = centerY + size;	index++;
-		vertices[index] = 0.f;	index++;
-		vertices[index] = startTime;	index++;	// triangle1
-
 
 
 		vertices[index] = centerX - size;	index++;
@@ -275,15 +274,68 @@ void Renderer::CreateParticleCloud(int numParticles)
 		vertices[index] = 0.f;	index++;
 		vertices[index] = startTime;	index++;
 
-		vertices[index] = centerX + size;	index++;
-		vertices[index] = centerY - size;	index++;
-		vertices[index] = 0.f;	index++;
-		vertices[index] = startTime;	index++;
+		vertices[index] = vx;	index++;
+		vertices[index] = vy;	index++;
+		vertices[index] = vz;	index++;
+		vertices[index] = lifeTime;	index++;
+
+
 
 		vertices[index] = centerX + size;	index++;
 		vertices[index] = centerY + size;	index++;
 		vertices[index] = 0.f;	index++;
-		vertices[index] = startTime;	index++;	// triangle2
+		vertices[index] = startTime;	index++;
+		vertices[index] = vx;	index++;
+		vertices[index] = vy;	index++;
+		vertices[index] = vz;	index++;
+		vertices[index] = lifeTime;	index++;
+
+
+
+		vertices[index] = centerX - size;	index++;
+		vertices[index] = centerY + size;	index++;
+		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;	
+		vertices[index] = vx;	index++;
+		vertices[index] = vy;	index++;
+		vertices[index] = vz;	index++;
+		vertices[index] = lifeTime;	index++;
+
+		// triangle1
+
+
+
+
+		vertices[index] = centerX - size;	index++;
+		vertices[index] = centerY - size;	index++;
+		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;
+		vertices[index] = vx;	index++;
+		vertices[index] = vy;	index++;
+		vertices[index] = vz;	index++;
+		vertices[index] = lifeTime;	index++;
+
+
+		vertices[index] = centerX + size;	index++;
+		vertices[index] = centerY - size;	index++;
+		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;
+		vertices[index] = vx;	index++;
+		vertices[index] = vy;	index++;
+		vertices[index] = vz;	index++;
+		vertices[index] = lifeTime;	index++;
+
+
+		vertices[index] = centerX + size;	index++;
+		vertices[index] = centerY + size;	index++;
+		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;	
+		vertices[index] = vx;	index++;
+		vertices[index] = vy;	index++;
+		vertices[index] = vz;	index++;
+		vertices[index] = lifeTime;	index++;
+
+		// triangle2
 	}
 	
 	glGenBuffers(1, &m_ParticleCloudVBO);
@@ -366,7 +418,7 @@ void Renderer::DrawParticleCloud()
 		3, 
 		GL_FLOAT, 
 		GL_FALSE, 
-		sizeof(float) * 4, 0);
+		sizeof(float) * 8, 0);
 	
 
 	int attribStartTime = glGetAttribLocation(shader, "a_StartTime");
@@ -380,12 +432,34 @@ void Renderer::DrawParticleCloud()
 		1,
 		GL_FLOAT,
 		GL_FALSE,
-		sizeof(float) * 4, 
+		sizeof(float) * 8, 
 		(GLvoid*)(sizeof(float)*3));
 		// 여기번째부터 시작
 		
 	// 버텍스에 attrib 다 붙여 넣어도 빠름 / 너무 많으면 크래쉬
 
+
+
+	int attribVelocity = glGetAttribLocation(shader, "a_Velocity");
+	glEnableVertexAttribArray(attribVelocity);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleCloudVBO);
+
+	glVertexAttribPointer(attribVelocity,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(float) * 8,
+		(GLvoid*)(sizeof(float) * 4));
+
+
+	int attribLifeTime = glGetAttribLocation(shader, "a_LifeTime");
+	glEnableVertexAttribArray(attribLifeTime);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleCloudVBO);
+	glVertexAttribPointer(attribLifeTime,
+		1,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(float) * 8, (GLvoid*)(sizeof(float) * 7));
 
 
 	//버텍스 수

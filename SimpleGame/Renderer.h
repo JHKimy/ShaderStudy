@@ -41,15 +41,14 @@ private:
 
 	GLuint m_VBORect = 0;
 	GLuint m_SolidRectShader = 0;
-
 	GLuint m_TestVBO = 0;
-
 	// 货肺款 嘉捞歹 积己
 	GLuint m_ParticleShader = 0;
 	GLuint m_ParticleVBO = 0;
 
-	GLuint m_ParticleCloudShader = 0;
 
+
+	GLuint m_ParticleCloudShader = 0;
 	GLuint m_ParticleCloudVBO = 0;
 	GLuint m_ParticleCloudVertexCount = 0;
 	float m_ParticleTime = 0.f;

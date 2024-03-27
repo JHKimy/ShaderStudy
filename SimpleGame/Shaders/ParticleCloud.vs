@@ -2,6 +2,8 @@
 
 in vec3 a_Position;
 in float a_StartTime;
+in vec3 a_Velocity;
+in float a_LifeTime;
 
 // 시간 (외부)
 uniform float u_Time = 0;
@@ -22,12 +24,35 @@ void Basic()
 {
 	vec4 newPosition = vec4(a_Position.xy * a_StartTime ,0 ,1);
 	gl_Position = newPosition;
+}
+
+void Velocity()
+{
+	// float newTime = 2.0 * fract(u_Time / u_Period);
+
+	float t = u_Time - a_StartTime;
+	vec4 newPosition = vec4(a_Position, 1);
+
+	if(t>0)
+	{	
+		t = a_LifeTime * fract(t/a_LifeTime);
+
+		newPosition.xy = newPosition.xy + a_Velocity.xy * t;
+	}
+	else
+	{
+		newPosition.x = -1000000;
+	}
+
+	gl_Position = newPosition;
 
 }
 
+
+
 void Line()
 {
-	float newTIme = abs(fract(u_Time / u_Period) - 0.5) * 2.0 ;	// 정수가 되는 순간 0 
+	float newTime = abs(fract(u_Time / u_Period) - 0.5) * 2.0 ;	// 정수가 되는 순간 0 
 	// 수학적으로 식 만들어 계산 후 적용
 	// 시험에도 나올 수 있음
 
@@ -35,7 +60,7 @@ void Line()
 
 	newPosition.xyz = 
 	(c_StartPos + a_Position) + 
-	c_Velocity * newTIme;
+	c_Velocity * newTime;
 
 	newPosition.w = 1;
 	gl_Position = newPosition;
@@ -81,9 +106,10 @@ void Parabola()
 
 void main()
 {
-	Basic();
-	
+	//Basic();
 	// Parabola();
 	// Circle();
 	// Line();
+
+	Velocity();
 }
