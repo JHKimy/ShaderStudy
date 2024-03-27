@@ -28,6 +28,10 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	
 	m_ParticleShader = CompileShaders("./Shaders/Particle.vs", "./Shaders/Particle.fs");
 
+	m_ParticleCloudShader = CompileShaders("./Shaders/ParticleCloud.vs", "./Shaders/ParticleCloud.fs");
+	// 셰이더 2개 생성 후 컴파일
+	// 사용 셰이더 바꾸기
+ 
 	//Create VBOs
 	CreateVertexBufferObjects();
 
@@ -235,36 +239,51 @@ void Renderer::CreateParticleCloud(int numParticles)
 	float size = 0.01f;
 	int particleCount = numParticles;
 	int vertexCount = particleCount * 6;
-	int floatCount = vertexCount * 3;
+	int floatCount = vertexCount * (3 + 1);	// x, y, z, startTime
+
 
 	float* vertices = NULL;
 	vertices = new float[floatCount];
 
 	int index = 0;
-	for (int i = 0; i < particleCount; i++) 
+	for (int i = 0; i < particleCount; i++)
 	{
+		// attribute 하나 더 추가 (시간)
+		float startTime = 1.f * ((float)rand() / (float)RAND_MAX);
 		centerX = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
 		centerY = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
 
 		vertices[index] = centerX - size;	index++;
 		vertices[index] = centerY - size;	index++;
 		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;
+
 		vertices[index] = centerX + size;	index++;
 		vertices[index] = centerY + size;	index++;
 		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;
+
 		vertices[index] = centerX - size;	index++;
 		vertices[index] = centerY + size;	index++;
-		vertices[index] = 0.f;	index++;	// triangle1
+		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;	// triangle1
+
+
 
 		vertices[index] = centerX - size;	index++;
 		vertices[index] = centerY - size;	index++;
 		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;
+
 		vertices[index] = centerX + size;	index++;
 		vertices[index] = centerY - size;	index++;
 		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;
+
 		vertices[index] = centerX + size;	index++;
 		vertices[index] = centerY + size;	index++;
-		vertices[index] = 0.f;	index++;	// triangle2
+		vertices[index] = 0.f;	index++;
+		vertices[index] = startTime;	index++;	// triangle2
 	}
 	
 	glGenBuffers(1, &m_ParticleCloudVBO);
@@ -273,6 +292,10 @@ void Renderer::CreateParticleCloud(int numParticles)
 	m_ParticleCloudVertexCount = vertexCount;
 	delete[] vertices;
 }
+
+
+
+
 
 void Renderer::DrawTest()
 {
@@ -323,7 +346,7 @@ void Renderer::DrawParticle()
 void Renderer::DrawParticleCloud()
 {
 	// 쉐이더 선택
-	GLuint shader = m_ParticleShader;
+	GLuint shader = m_ParticleCloudShader;
 
 	// 호출된 이후로는 이 파티클셰이더 사용
 	glUseProgram(shader);
@@ -333,17 +356,37 @@ void Renderer::DrawParticleCloud()
 	glUniform1f(ulTime, m_ParticleTime);
 	m_ParticleTime += 0.016f;	// 프레임 타임 : 정확하진 않음
 
-
-
 	int ulPeriod = glGetUniformLocation(shader, "u_Period");
 	glUniform1f(ulPeriod, 2.0);
-
-
 
 	int attribPosition = glGetAttribLocation(shader, "a_Position");
 	glEnableVertexAttribArray(attribPosition);
 	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleCloudVBO);
-	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+	glVertexAttribPointer(attribPosition, 
+		3, 
+		GL_FLOAT, 
+		GL_FALSE, 
+		sizeof(float) * 4, 0);
+	
+
+	int attribStartTime = glGetAttribLocation(shader, "a_StartTime");
+	glEnableVertexAttribArray(attribStartTime);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleCloudVBO);	
+	// 혹여나 모르는 이상동작 방지하므로 한번 더 호출
+	// 이 함수는 처리시간 굉장히 짧으므로 아낄 필요 없음
+	// 내부적으로 컨텍스트 스위칭
+
+	glVertexAttribPointer(attribStartTime,
+		1,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(float) * 4, 
+		(GLvoid*)(sizeof(float)*3));
+		// 여기번째부터 시작
+		
+	// 버텍스에 attrib 다 붙여 넣어도 빠름 / 너무 많으면 크래쉬
+
+
 
 	//버텍스 수
 	glDrawArrays(GL_TRIANGLES, 0, m_ParticleCloudVertexCount);
