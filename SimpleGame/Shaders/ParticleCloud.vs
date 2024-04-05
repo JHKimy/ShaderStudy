@@ -1,9 +1,12 @@
 #version 330
 
+// 외부 입력
 in vec3 a_Position;
 in float a_StartTime;
 in vec3 a_Velocity;
 in float a_LifeTime;
+in float a_Amp;
+in float a_Period;
 
 // 시간 (외부)
 uniform float u_Time = 0;
@@ -111,9 +114,9 @@ void SinShape()
 	float t = u_Time - a_StartTime;
 
 	// 폭
-	float amp = 0.5f;
+	float amp = a_Amp;
 	// 주기
-	float period = 2;
+	float period = a_Period;
 
 	if(t>0)
 	{	
