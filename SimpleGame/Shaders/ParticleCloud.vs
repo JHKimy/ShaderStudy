@@ -110,13 +110,20 @@ void SinShape()
 	vec4 newPosition = vec4(a_Position, 1);
 	float t = u_Time - a_StartTime;
 
+	// 폭
+	float amp = 0.5f;
+	// 주기
+	float period = 2;
+
 	if(t>0)
 	{	
 		t = a_LifeTime * fract(t/a_LifeTime);
 
 		newPosition.x = newPosition.x + a_Velocity.x * t;
-		newPosition.y = newPosition.y + sin ((newPosition.x + 1 ) * c_PI);
+		//(시간 * 파이 * 주기) * 높이 
+		newPosition.y = newPosition.y + sin (t * c_PI * period ) * amp;
 	}
+
 	else
 	{
 		newPosition.x = -1000000;
@@ -135,3 +142,7 @@ void main()
 	// Velocity();
 	SinShape();
 }
+
+// vs에서 받을 수 있는 외부 입력 두가지
+// Attrib / Uniform
+// -> 파티클마다 다르게 할 수 있음
