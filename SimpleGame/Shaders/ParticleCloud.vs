@@ -104,12 +104,34 @@ void Parabola()
 	gl_Position = newPosition;
 }
 
+// sin 그래프대로 움직이기
+void SinShape()
+{
+	vec4 newPosition = vec4(a_Position, 1);
+	float t = u_Time - a_StartTime;
+
+	if(t>0)
+	{	
+		t = a_LifeTime * fract(t/a_LifeTime);
+
+		newPosition.x = newPosition.x + a_Velocity.x * t;
+		newPosition.y = newPosition.y + sin ((newPosition.x + 1 ) * c_PI);
+	}
+	else
+	{
+		newPosition.x = -1000000;
+	}
+
+	gl_Position = newPosition;
+}
+
+
 void main()
 {
 	//Basic();
 	// Parabola();
 	// Circle();
 	// Line();
-
-	Velocity();
+	// Velocity();
+	SinShape();
 }
