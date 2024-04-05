@@ -123,8 +123,8 @@ void SinShape()
 		t = a_LifeTime * fract(t/a_LifeTime);
 
 		newPosition.x = newPosition.x + a_Velocity.x * t;
-		//(시간 * 파이 * 주기) * 높이 
-		newPosition.y = newPosition.y + sin (t * c_PI * period ) * amp;
+		// 갈수록 증가하는 변수 * 높이 * (시간 * 파이 * 주기) 
+		newPosition.y = newPosition.y + t * amp * sin (t * c_PI * period );
 	}
 
 	else
