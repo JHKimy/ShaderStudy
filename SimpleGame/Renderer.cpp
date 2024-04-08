@@ -238,7 +238,7 @@ void Renderer::CreateParticleCloud(int numParticles)
 	float centerX, centerY;
 	centerX = 0.f;
 	centerY = 0.f;
-	float size = 0.01f;
+	float size = 0.005f;
 	int particleCount = numParticles;
 	int vertexCount = particleCount * 6;
 
@@ -261,22 +261,24 @@ void Renderer::CreateParticleCloud(int numParticles)
 	for (int i = 0; i < particleCount; i++)
 	{
 
-		/*centerX = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
-		centerY = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;*/
-		vx = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
-		vy = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		centerX = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		centerY = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		//vx = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		vx = 0.f;
+		//vy = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		vy = -0.01f;
 		vz = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
 
 		// attribute 하나 더 추가 (시간)
 		//float startTime = 6.f * ((float)rand() / (float)RAND_MAX);
-		centerX = 0.f;
-		centerY = 0.f;
+		//centerX = 0.f;
+		//centerY = 0.f;
 		//vx = 0.f;
 		//vy = 1.f;
 		//vz = 0.f;
 
-		startTime = 50.f * ((float)rand() / (float)RAND_MAX);
-		lifeTime = 0.2f  * ((float)rand() / (float)RAND_MAX) + 0.1f;
+		startTime = 10.f * ((float)rand() / (float)RAND_MAX);
+		lifeTime = 1.f  * ((float)rand() / (float)RAND_MAX) + 0.1f;
 		amp = (((float)rand() / (float)RAND_MAX)-0.5) *2.0f;
 		period = ((float)rand() / (float)RAND_MAX);
 		value = ((float)rand() / (float)RAND_MAX);

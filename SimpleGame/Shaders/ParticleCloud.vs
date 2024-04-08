@@ -20,7 +20,7 @@ uniform float u_Period = 2.0f;
 const vec3 c_StartPos = vec3(-2, 0, 0);
 const vec3 c_Velocity = vec3(2.0, 0, 0);	// 1ÃÊ
 const vec3 c_ParaVelocity = vec3(2.0, 2.0, 0);
-const vec2 c_2DGravity = vec2(0.0,-5.9);
+const vec2 c_2DGravity = vec2(0.0,-4.9);
 const float c_PI = 3.141592;
 
 
@@ -40,8 +40,9 @@ void Velocity()
 	if(t>0)
 	{	
 		t = a_LifeTime * fract(t/a_LifeTime);
+		float tt = t*t ;
 
-		newPosition.xy = newPosition.xy + a_Velocity.xy * t;
+		newPosition.xy = newPosition.xy + a_Velocity.xy * t * 0.5 * c_2DGravity * tt;
 	}
 	else
 	{
