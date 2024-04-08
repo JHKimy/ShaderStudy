@@ -7,6 +7,7 @@ in vec3 a_Velocity;
 in float a_LifeTime;
 in float a_Amp;
 in float a_Period;
+in float a_Value;
 
 // 시간 (외부)
 uniform float u_Time = 0;
@@ -19,7 +20,7 @@ uniform float u_Period = 2.0f;
 const vec3 c_StartPos = vec3(-2, 0, 0);
 const vec3 c_Velocity = vec3(2.0, 0, 0);	// 1초
 const vec3 c_ParaVelocity = vec3(2.0, 2.0, 0);
-const vec2 c_2DGravity = vec2(0.0,-4.9);
+const vec2 c_2DGravity = vec2(0.0,-5.9);
 const float c_PI = 3.141592;
 
 
@@ -113,6 +114,7 @@ void SinShape()
 	vec4 newPosition = vec4(a_Position, 1);
 	float t = u_Time - a_StartTime;
 
+
 	// 폭
 	float amp = a_Amp;
 	// 주기
@@ -121,13 +123,21 @@ void SinShape()
 	if(t>0)
 	{	
 		t = a_LifeTime * fract(t/a_LifeTime);
+		float tt = t*t;
+
+		float value = a_Value * 2.0 * c_PI;
+		float x = cos(value);
+		float y = sin(value);
+		newPosition.xy = newPosition.xy + vec2(x,y);
+
+		vec2 newVel = a_Velocity.xy + c_2DGravity *t;
 
 		// 진행방향에 수직인 벡터 구하기
-		vec2 newDir = vec2 (-a_Velocity.y, a_Velocity.x);
+		vec2 newDir = vec2 (-newVel.y, newVel.x);
 		newDir = normalize(newDir);
 
-		newPosition.xy = newPosition.xy + a_Velocity.xy * t;
-		newPosition.xy = newPosition.xy + newDir *( t * 0.5 ) * amp * sin (t * c_PI * period );
+		newPosition.xy = newPosition.xy + a_Velocity.xy * t + 0.5 * c_2DGravity * tt;
+		newPosition.xy = newPosition.xy + newDir * 0.5*t  * amp * sin (t * c_PI * period );
 	}
 
 	else
@@ -141,7 +151,7 @@ void SinShape()
 
 void main()
 {
-	//Basic();
+	// Basic();
 	// Parabola();
 	// Circle();
 	// Line();
