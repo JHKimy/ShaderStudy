@@ -149,6 +149,47 @@ void SinShape()
 }
 
 
+
+void SinShapeCycle()
+{
+	vec4 newPosition = vec4(a_Position, 1);
+	float t = u_Time - a_StartTime;
+
+
+	// 폭
+	float amp = a_Amp;
+	// 주기
+	float period = a_Period;
+
+	if(t>0)
+	{	
+		t = a_LifeTime * fract(t/a_LifeTime);
+		float tt = t*t;
+
+		float value = a_StartTime * 2.0 * c_PI;
+		float x = cos(value);
+		float y = sin(value);
+		newPosition.xy = newPosition.xy + vec2(x,y);
+
+		vec2 newVel = a_Velocity.xy + c_2DGravity *t;
+
+		// 진행방향에 수직인 벡터 구하기
+		vec2 newDir = vec2 (-newVel.y, newVel.x);
+		newDir = normalize(newDir);
+
+		newPosition.xy = newPosition.xy + a_Velocity.xy * t + 0.5 * c_2DGravity * tt;
+		newPosition.xy = newPosition.xy + newDir * 0.5*t  * amp * sin (t * c_PI * period );
+	}
+
+	else
+	{
+		newPosition.x = -1000000;
+	}
+
+	gl_Position = newPosition;
+}
+
+
 void main()
 {
 	// Basic();
@@ -156,7 +197,9 @@ void main()
 	// Circle();
 	// Line();
 	// Velocity();
-	SinShape();
+	//SinShape();
+	SinShapeCycle();
+
 }
 
 // vs에서 받을 수 있는 외부 입력 두가지

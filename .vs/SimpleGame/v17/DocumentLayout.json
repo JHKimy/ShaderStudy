@@ -39,8 +39,7 @@
               "ViewState": "AQIAACEAAAAAAAAAAAAAAC0AAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-27T01:59:37.228Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -64,7 +63,7 @@
               "RelativeDocumentMoniker": "SimpleGame\\Renderer.cpp",
               "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Renderer.cpp",
               "RelativeToolTip": "SimpleGame\\Renderer.cpp",
-              "ViewState": "AQIAAAQCAAAAAAAAAAAAAAoCAAALAAAA",
+              "ViewState": "AQIAAAQCAAAAAAAAAAAiwBICAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-13T03:18:59.383Z",
               "IsPinned": true,
@@ -78,7 +77,7 @@
               "RelativeDocumentMoniker": "SimpleGame\\Shaders\\ParticleCloud.vs",
               "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\ParticleCloud.vs",
               "RelativeToolTip": "SimpleGame\\Shaders\\ParticleCloud.vs",
-              "ViewState": "AQIAAIUAAAAAAAAAAAAUwJAAAAAbAAAA",
+              "ViewState": "AQIAAKsAAAAAAAAAAAAQwL4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-03-27T03:30:49.64Z",
               "IsPinned": true,

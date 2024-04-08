@@ -36,7 +36,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	CreateVertexBufferObjects();
 
 	// 2°³
-	CreateParticleCloud(10000);
+	CreateParticleCloud(5000);
 
 	if (m_SolidRectShader > 0 && m_VBORect > 0)
 	{
@@ -275,8 +275,8 @@ void Renderer::CreateParticleCloud(int numParticles)
 		//vy = 1.f;
 		//vz = 0.f;
 
-		startTime = 8.f * ((float)rand() / (float)RAND_MAX);
-		lifeTime = 0.2f  * ((float)rand() / (float)RAND_MAX)+0.2f;
+		startTime = 50.f * ((float)rand() / (float)RAND_MAX);
+		lifeTime = 0.2f  * ((float)rand() / (float)RAND_MAX) + 0.1f;
 		amp = (((float)rand() / (float)RAND_MAX)-0.5) *2.0f;
 		period = ((float)rand() / (float)RAND_MAX);
 		value = ((float)rand() / (float)RAND_MAX);
