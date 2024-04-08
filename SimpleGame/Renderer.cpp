@@ -36,7 +36,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	CreateVertexBufferObjects();
 
 	// 2개
-	CreateParticleCloud(100);
+	CreateParticleCloud(1000);
 
 	if (m_SolidRectShader > 0 && m_VBORect > 0)
 	{
@@ -259,22 +259,22 @@ void Renderer::CreateParticleCloud(int numParticles)
 	for (int i = 0; i < particleCount; i++)
 	{
 
-		//centerX = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
-		//centerY = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
-		//vx = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
-		//vy = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
-		//vz = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		centerX = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		centerY = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		vx = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		vy = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		vz = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
 
 		// attribute 하나 더 추가 (시간)
 		//float startTime = 6.f * ((float)rand() / (float)RAND_MAX);
-		//lifeTime = 4.f  * ((float)rand() / (float)RAND_MAX) + 1.f;
-		centerX = -1.f;
+		/*centerX = -1.f;
 		centerY = 0.f;
-		vx = 1.f;
-		vy = 0.f;
-		vz = 0.f;
-		startTime = 6.f * ((float)rand() / (float)RAND_MAX);
-		lifeTime = 2.f;
+		vx = 0.f;
+		vy = 1.f;
+		vz = 0.f;*/
+
+		startTime = 8.f * ((float)rand() / (float)RAND_MAX);
+		lifeTime = 8.f  * ((float)rand() / (float)RAND_MAX) + 1.f;
 		amp = (((float)rand() / (float)RAND_MAX)-0.5) *2.0f;
 		period = ((float)rand() / (float)RAND_MAX);
 

@@ -122,9 +122,12 @@ void SinShape()
 	{	
 		t = a_LifeTime * fract(t/a_LifeTime);
 
-		newPosition.x = newPosition.x + a_Velocity.x * t;
-		// 갈수록 증가하는 변수 * 높이 * (시간 * 파이 * 주기) 
-		newPosition.y = newPosition.y + t * amp * sin (t * c_PI * period );
+		// 진행방향에 수직인 벡터 구하기
+		vec2 newDir = vec2 (-a_Velocity.y, a_Velocity.x);
+		newDir = normalize(newDir);
+
+		newPosition.xy = newPosition.xy + a_Velocity.xy * t;
+		newPosition.xy = newPosition.xy + newDir *( t * 0.5 ) * amp * sin (t * c_PI * period );
 	}
 
 	else
