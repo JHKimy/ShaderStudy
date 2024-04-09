@@ -9,12 +9,10 @@ in float a_Amp;
 in float a_Period;
 in float a_Value;
 
-// 시간 (외부)
+// 외부
 uniform float u_Time = 0;
-
-// (외부에서 조작)
 uniform float u_Period = 2.0f;
-
+uniform vec2 u_Acc = vec2(0, 0);
 
 // 시작 위치, 속도
 const vec3 c_StartPos = vec3(-2, 0, 0);
@@ -32,17 +30,16 @@ void Basic()
 
 void Velocity()
 {
-	// float newTime = 2.0 * fract(u_Time / u_Period);
-
-	float t = u_Time - a_StartTime;
 	vec4 newPosition = vec4(a_Position, 1);
+	float t = u_Time - a_StartTime;
 
 	if(t>0)
 	{	
 		t = a_LifeTime * fract(t/a_LifeTime);
 		float tt = t*t ;
 
-		newPosition.xy = newPosition.xy + a_Velocity.xy * t * 0.5 * c_2DGravity * tt;
+		// 외부 힘 추가
+		newPosition.xy = newPosition.xy + a_Velocity.xy * t + 0.5 * (c_2DGravity + u_Acc) * tt;
 	}
 	else
 	{
@@ -170,16 +167,17 @@ void SinShapeCycle()
 		float value = a_StartTime * 2.0 * c_PI;
 		float x = cos(value);
 		float y = sin(value);
+
 		newPosition.xy = newPosition.xy + vec2(x,y);
 
-		vec2 newVel = a_Velocity.xy + c_2DGravity *t;
+		vec2 newVel = a_Velocity.xy + c_2DGravity * t;
 
 		// 진행방향에 수직인 벡터 구하기
 		vec2 newDir = vec2 (-newVel.y, newVel.x);
 		newDir = normalize(newDir);
 
 		newPosition.xy = newPosition.xy + a_Velocity.xy * t + 0.5 * c_2DGravity * tt;
-		newPosition.xy = newPosition.xy + newDir * 0.5*t  * amp * sin (t * c_PI * period );
+		newPosition.xy = newPosition.xy + newDir * (0.5 * t)  * amp * sin (t * c_PI * period );
 	}
 
 	else
@@ -194,12 +192,12 @@ void SinShapeCycle()
 void main()
 {
 	// Basic();
-	// Parabola();
+	//Parabola();
 	// Circle();
 	// Line();
-	// Velocity();
+	 Velocity();
 	//SinShape();
-	SinShapeCycle();
+	//SinShapeCycle();
 
 }
 
