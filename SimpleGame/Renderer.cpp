@@ -280,7 +280,7 @@ void Renderer::CreateParticleCloud(int numParticles)
 		//vz = 0.f;
 
 		startTime = 10.f * ((float)rand() / (float)RAND_MAX);
-		lifeTime = 1.f  * ((float)rand() / (float)RAND_MAX) + 1.f;
+		lifeTime = 0.5f  * ((float)rand() / (float)RAND_MAX) + 1.f;
 		amp = (((float)rand() / (float)RAND_MAX) - 0.5f) *2.f;
 		period = ((float)rand() / (float)RAND_MAX);
 		value = ((float)rand() / (float)RAND_MAX);
@@ -458,6 +458,9 @@ void Renderer::DrawParticle()
 
 void Renderer::DrawParticleCloud()
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC0_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// Ω¶¿Ã¥ı º±≈√
 	GLuint shader = m_ParticleCloudShader;
 
@@ -574,4 +577,6 @@ void Renderer::DrawParticleCloud()
 	glDrawArrays(GL_TRIANGLES, 0, m_ParticleCloudVertexCount);
 
 	glDisableVertexAttribArray(attribPosition);
+
+	glDisable(GL_BLEND);
 }

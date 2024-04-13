@@ -23,14 +23,16 @@ uniform vec2 u_AttractPos = vec2(0, 0);
 const vec3 c_StartPos = vec3(-2, 0, 0);
 const vec3 c_Velocity = vec3(2.0, 0, 0);	// 1초
 const vec3 c_ParaVelocity = vec3(2.0, 2.0, 0);
-const vec2 c_2DGravity = vec2(0.0,-4.9);
+const vec2 c_2DGravity = vec2(0.0,-0.9);
 const float c_PI = 3.141592;
+
 
 
 void Basic()
 {
 	vec4 newPosition = vec4(a_Position.xy * a_StartTime ,0 ,1);
 	gl_Position = newPosition;
+	v_Color = a_Color;
 }
 
 
@@ -56,6 +58,7 @@ void Velocity()
 	}
 
 	gl_Position = newPosition;
+	v_Color = a_Color;
 }
 
 
@@ -74,7 +77,11 @@ void Line()
 
 	newPosition.w = 1;
 	gl_Position = newPosition;
+	v_Color = a_Color;
+
 }
+
+
 
 void Circle()
 {
@@ -91,6 +98,8 @@ void Circle()
 	newPosition.zw = vec2(0,1);
 	gl_Position = newPosition;
 }
+
+
 
 void Parabola()
 {
@@ -112,7 +121,11 @@ void Parabola()
 	newPosition.xy = vec2(transX, transY);
 	newPosition.zw = vec2(0,1);
 	gl_Position = newPosition;
+	v_Color = a_Color;
+
 }
+
+
 
 // sin 그래프대로 움직이기
 void CircleShape()
@@ -152,6 +165,8 @@ void CircleShape()
 	}
 
 	gl_Position = newPosition;
+	v_Color = a_Color;
+
 }
 
 
@@ -194,6 +209,7 @@ void CircleShapeCycle()
 	}
 
 	gl_Position = newPosition;
+	v_Color = a_Color;
 }
 
 
@@ -209,6 +225,10 @@ void HeartShapeCycle()
 	if(t>0)
 	{	
 		t = a_LifeTime * fract(t/a_LifeTime);
+		
+		// 1 -> 0으로 감소
+		float particleAlpha = 1- t/a_LifeTime;
+
 		float tt = t*t;
 
 		float value = a_StartTime * 2.0 * c_PI;
@@ -224,6 +244,7 @@ void HeartShapeCycle()
 		newDir = normalize(newDir);
 		newPosition.xy = newPosition.xy + a_Velocity.xy * t + 0.5 * c_2DGravity * tt;
 		newPosition.xy = newPosition.xy + newDir * (0.1 * t)  * amp * sin (t * c_PI * period );
+		v_Color = vec4(a_Color.rgb, particleAlpha);
 	}
 
 	else
@@ -233,6 +254,9 @@ void HeartShapeCycle()
 
 	gl_Position = newPosition;
 }
+
+
+
 
 
 void main()
