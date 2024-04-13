@@ -8,11 +8,16 @@ in float a_LifeTime;
 in float a_Amp;
 in float a_Period;
 in float a_Value;
+in vec4 a_Color;
+
+// fs로 출력
+out vec4 v_Color;
 
 // 외부
 uniform float u_Time = 0;
 uniform float u_Period = 2.0f;
 uniform vec2 u_Acc = vec2(0, 0);
+uniform vec2 u_AttractPos = vec2(0, 0);
 
 // 시작 위치, 속도
 const vec3 c_StartPos = vec3(-2, 0, 0);
@@ -28,6 +33,8 @@ void Basic()
 	gl_Position = newPosition;
 }
 
+
+
 void Velocity()
 {
 	vec4 newPosition = vec4(a_Position, 1);
@@ -35,11 +42,13 @@ void Velocity()
 
 	if(t>0)
 	{	
-		t = a_LifeTime * fract(t/a_LifeTime);
+		t = a_LifeTime * fract(t / a_LifeTime);
+		float attractValue = fract(t/a_LifeTime);
 		float tt = t*t ;
 
-		// 외부 힘 추가
 		newPosition.xy = newPosition.xy + a_Velocity.xy * t + 0.5 * (c_2DGravity + u_Acc) * tt;
+		newPosition.xy = mix(newPosition.xy,u_AttractPos,attractValue);
+
 	}
 	else
 	{
@@ -47,7 +56,6 @@ void Velocity()
 	}
 
 	gl_Position = newPosition;
-
 }
 
 
@@ -107,7 +115,7 @@ void Parabola()
 }
 
 // sin 그래프대로 움직이기
-void SinShape()
+void CircleShape()
 {
 	vec4 newPosition = vec4(a_Position, 1);
 	float t = u_Time - a_StartTime;
@@ -148,7 +156,7 @@ void SinShape()
 
 
 
-void SinShapeCycle()
+void CircleShapeCycle()
 {
 	vec4 newPosition = vec4(a_Position, 1);
 	float t = u_Time - a_StartTime;
@@ -189,15 +197,57 @@ void SinShapeCycle()
 }
 
 
+
+void HeartShapeCycle()
+{
+	vec4 newPosition = vec4(a_Position, 1);
+	float t = u_Time - a_StartTime;
+
+	float amp = a_Amp;
+	float period = a_Period;
+
+	if(t>0)
+	{	
+		t = a_LifeTime * fract(t/a_LifeTime);
+		float tt = t*t;
+
+		float value = a_StartTime * 2.0 * c_PI;
+		float x = 16 * pow(sin(value), 3);
+		float y = 13 * cos (value) - 5*cos(2*value) - 2* cos(3*value) - cos(4*value);
+
+		x *= 0.05f;
+		y *= 0.05f;
+		newPosition.xy = newPosition.xy + vec2(x,y);
+
+		vec2 newVel = a_Velocity.xy + c_2DGravity * t;
+		vec2 newDir = vec2 (-newVel.y, newVel.x);
+		newDir = normalize(newDir);
+		newPosition.xy = newPosition.xy + a_Velocity.xy * t + 0.5 * c_2DGravity * tt;
+		newPosition.xy = newPosition.xy + newDir * (0.1 * t)  * amp * sin (t * c_PI * period );
+	}
+
+	else
+	{
+		newPosition.x = -1000000;
+	}
+
+	gl_Position = newPosition;
+}
+
+
 void main()
 {
+	HeartShapeCycle();
+
 	// Basic();
-	//Parabola();
+	// Parabola();
 	// Circle();
 	// Line();
-	 Velocity();
-	//SinShape();
-	//SinShapeCycle();
+	// Velocity();
+	// CircleShape();
+	// CircleShapeCycle();
+
+	v_Color = a_Color;
 
 }
 

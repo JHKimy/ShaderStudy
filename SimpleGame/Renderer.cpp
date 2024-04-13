@@ -36,7 +36,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	CreateVertexBufferObjects();
 
 	// 2개
-	CreateParticleCloud(5000);
+	CreateParticleCloud(10000);
 
 	if (m_SolidRectShader > 0 && m_VBORect > 0)
 	{
@@ -242,8 +242,8 @@ void Renderer::CreateParticleCloud(int numParticles)
 	int particleCount = numParticles;
 	int vertexCount = particleCount * 6;
 
-	int floatCount = vertexCount * (3 + 1 + 3 + 1 + 1 + 1 + 1);
-	// x, y, z, startTime, vx, vy, vz, lifeTime, amp, period, value
+	int floatCount = vertexCount * (3 + 1 + 3 + 1 + 1 + 1 + 1 + 4);
+	// x, y, z, startTime, vx, vy, vz, lifeTime, amp, period, value, r, g, b, a
 
 
 	float* vertices = NULL;
@@ -252,6 +252,8 @@ void Renderer::CreateParticleCloud(int numParticles)
 	float vx, vy, vz;
 	float startTime;
 	float lifeTime;
+	float r, g, b, a;
+
 
 	float amp, period;
 	// 추가
@@ -261,8 +263,8 @@ void Renderer::CreateParticleCloud(int numParticles)
 	for (int i = 0; i < particleCount; i++)
 	{
 		float velocityScale = 0.2f;
-		centerX = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
-		centerY = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		// centerX = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
+		// centerY = ((float)rand() / (float)RAND_MAX) * 2.f - 1.f;
 		//vx = (((float)rand() / (float)RAND_MAX) * 2.f - 1.f ) * velocityScale;
 		vx = 0.f;
 		//vy = (((float)rand() / (float)RAND_MAX) * 2.f - 1.f) * velocityScale;
@@ -271,19 +273,21 @@ void Renderer::CreateParticleCloud(int numParticles)
 
 		// attribute 하나 더 추가 (시간)
 		//float startTime = 6.f * ((float)rand() / (float)RAND_MAX);
-		//centerX = 0.f;
-		//centerY = 0.f;
+		centerX = 0.f;
+		centerY = 0.f;
 		//vx = 0.f;
 		//vy = 1.f;
 		//vz = 0.f;
 
 		startTime = 10.f * ((float)rand() / (float)RAND_MAX);
 		lifeTime = 1.f  * ((float)rand() / (float)RAND_MAX) + 1.f;
-		amp = (((float)rand() / (float)RAND_MAX)-0.5f) *2.f;
+		amp = (((float)rand() / (float)RAND_MAX) - 0.5f) *2.f;
 		period = ((float)rand() / (float)RAND_MAX);
 		value = ((float)rand() / (float)RAND_MAX);
-		
-
+		r = ((float)rand() / (float)RAND_MAX);
+		g = ((float)rand() / (float)RAND_MAX);
+		b = ((float)rand() / (float)RAND_MAX);
+		a = ((float)rand() / (float)RAND_MAX);
 		 
 		vertices[index] = centerX - size;	index++;
 		vertices[index] = centerY - size;	index++;
@@ -296,6 +300,10 @@ void Renderer::CreateParticleCloud(int numParticles)
 		vertices[index] = amp;				index++;
 		vertices[index] = period;			index++;
 		vertices[index] = value;			index++;
+		vertices[index] = r;				index++;
+		vertices[index] = g;				index++;
+		vertices[index] = b;				index++;
+		vertices[index] = a;				index++;
 
 
 
@@ -310,6 +318,10 @@ void Renderer::CreateParticleCloud(int numParticles)
 		vertices[index] = amp;				index++;
 		vertices[index] = period;			index++;
 		vertices[index] = value;			index++;
+		vertices[index] = r;				index++;
+		vertices[index] = g;				index++;
+		vertices[index] = b;				index++;
+		vertices[index] = a;				index++;
 
 
 
@@ -324,6 +336,10 @@ void Renderer::CreateParticleCloud(int numParticles)
 		vertices[index] = amp;				index++;
 		vertices[index] = period;			index++;
 		vertices[index] = value;			index++;
+		vertices[index] = r;				index++;
+		vertices[index] = g;				index++;
+		vertices[index] = b;				index++;
+		vertices[index] = a;				index++;
 
 		// triangle1
 
@@ -341,6 +357,10 @@ void Renderer::CreateParticleCloud(int numParticles)
 		vertices[index] = amp;				index++;
 		vertices[index] = period;			index++;
 		vertices[index] = value;			index++;
+		vertices[index] = r;				index++;
+		vertices[index] = g;				index++;
+		vertices[index] = b;				index++;
+		vertices[index] = a;				index++;
 
 
 		vertices[index] = centerX + size;	index++;
@@ -354,6 +374,10 @@ void Renderer::CreateParticleCloud(int numParticles)
 		vertices[index] = amp;				index++;
 		vertices[index] = period;			index++;
 		vertices[index] = value;			index++;
+		vertices[index] = r;				index++;
+		vertices[index] = g;				index++;
+		vertices[index] = b;				index++;
+		vertices[index] = a;				index++;
 
 
 		vertices[index] = centerX + size;	index++;
@@ -367,6 +391,10 @@ void Renderer::CreateParticleCloud(int numParticles)
 		vertices[index] = amp;				index++;
 		vertices[index] = period;			index++;
 		vertices[index] = value;			index++;
+		vertices[index] = r;				index++;
+		vertices[index] = g;				index++;
+		vertices[index] = b;				index++;
+		vertices[index] = a;				index++;
 
 		// triangle2
 	}
@@ -436,7 +464,7 @@ void Renderer::DrawParticleCloud()
 	// 호출된 이후로는 이 파티클셰이더 사용
 	glUseProgram(shader);
 
-	GLuint stride = sizeof(float) * 11;
+	GLuint stride = sizeof(float) * 15;
 
 
 	// 디버깅했을때 0 나와야함 음수안됨
@@ -449,7 +477,9 @@ void Renderer::DrawParticleCloud()
 
 	int ulAcc = glGetUniformLocation(shader, "u_Acc");
 	// 2개 들어감
-	glUniform2f(ulAcc, -3.0, 0.0);
+	//glUniform2f(ulAcc, -3.0, 0.0);
+	//glUniform2f(ulAcc, sin(m_ParticleTime), 0.0);
+	glUniform2f(ulAcc, cos(m_ParticleTime/10.f), sin(m_ParticleTime / 10.f));
 
 
 
@@ -531,6 +561,14 @@ void Renderer::DrawParticleCloud()
 		GL_FALSE,
 		stride, (GLvoid*)(sizeof(float) * 10));
 
+	int attribColor = glGetAttribLocation(shader, "a_Color");
+	glEnableVertexAttribArray(attribColor);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ParticleCloudVBO);
+	glVertexAttribPointer(attribColor,
+		4,
+		GL_FLOAT,
+		GL_FALSE,
+		stride, (GLvoid*)(sizeof(float) * 11));
 
 	//버텍스 수
 	glDrawArrays(GL_TRIANGLES, 0, m_ParticleCloudVertexCount);
