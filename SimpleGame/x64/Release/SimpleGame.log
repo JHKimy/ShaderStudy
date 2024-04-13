@@ -1,11 +1,16 @@
-﻿  stdafx.cpp
-  Renderer.cpp
-D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(121,21): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  Renderer.cpp
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(144,21): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
   
-  SimpleGame.cpp
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(620,22): warning C4244: '인수': 'GLuint'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(621,21): warning C4244: '+=': 'float'에서 'GLuint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  
   코드를 생성하고 있습니다.
-  Previous IPDB not found, fall back to full compilation.
-  All 187 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  4 of 184 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   SimpleGame.vcxproj -> D:\5-1\셰이더 프로그래밍\ShaderStudy\x64\Release\SimpleGame.exe

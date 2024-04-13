@@ -32,11 +32,15 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	// 셰이더 2개 생성 후 컴파일
 	// 사용 셰이더 바꾸기
  
+
+	m_FSSandBoxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.fs");
+
+
 	//Create VBOs
 	CreateVertexBufferObjects();
 
 	// 2개
-	CreateParticleCloud(10000);
+	// CreateParticleCloud(10000);
 
 	if (m_SolidRectShader > 0 && m_VBORect > 0)
 	{
@@ -103,6 +107,25 @@ void Renderer::CreateVertexBufferObjects()
 
 	// 작업대 위에 올려진 것에 데이터 연결
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Particlevertices), Particlevertices, GL_STATIC_DRAW);
+
+
+
+
+	size = 0.5f;
+	float FSSandboxVerts[] =
+	{
+		-size, -size, 0,
+		 size,  size, 0,
+		-size,  size, 0,
+
+		 size,  size, 0,
+		 size, -size, 0,
+		-size, -size, 0
+	};
+
+	glGenBuffers(1, &m_FSSandboxVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_FSSandboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(FSSandboxVerts), FSSandboxVerts, GL_STATIC_DRAW);
 }
 
 // 쉐이더 프로그렘에 쉐이더 추가
@@ -579,4 +602,37 @@ void Renderer::DrawParticleCloud()
 	glDisableVertexAttribArray(attribPosition);
 
 	glDisable(GL_BLEND);
+}
+
+void Renderer::DrawFSSandbox()
+{
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC0_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	GLuint shader = m_FSSandBoxShader;
+
+	glUseProgram(shader);
+
+	GLuint stride = sizeof(float) * 3;
+
+
+	int ulTime = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(ulTime, m_FSSandboxTime);
+	m_FSSandboxTime += 0.016f;	// 프레임 타임 : 정확하진 않음
+
+
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glBindBuffer(GL_ARRAY_BUFFER, m_FSSandboxVBO);
+	glVertexAttribPointer(attribPosition,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		stride, 0);
+
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(attribPosition);
+	//glDisable(GL_BLEND);
 }
