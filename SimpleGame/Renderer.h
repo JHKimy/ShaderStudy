@@ -61,5 +61,5 @@ private:
 
 	GLuint m_FSSandBoxShader = 0;
 	GLuint m_FSSandboxVBO = 0;
-	GLuint m_FSSandboxTime = 0;
+	float m_FSSandboxTime = 0;
 };
