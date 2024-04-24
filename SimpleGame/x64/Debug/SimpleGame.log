@@ -1,14 +1,14 @@
 ﻿  Renderer.cpp
-D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(241,21): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(253,21): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
   
-D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(750,25): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(762,25): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
   (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
   
-D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(796,56): warning C4244: '인수': 'GLuint'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(864,56): warning C4244: '인수': 'GLuint'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
   
-D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(798,56): warning C4244: '인수': 'GLuint'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(866,56): warning C4244: '인수': 'GLuint'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
   
   SimpleGame.vcxproj -> D:\5-1\셰이더 프로그래밍\ShaderStudy\x64\Debug\SimpleGame.exe

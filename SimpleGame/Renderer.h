@@ -27,6 +27,10 @@ public:
 
 	void DrawGridMesh();
 
+	void DrawTextureSandbox();
+
+
+
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -46,6 +50,7 @@ private:
 
 
 	GLuint CreatePngTexture(char* filePath, GLuint samplingMethod);
+
 
 
 	bool m_Initialized = false;
@@ -82,6 +87,9 @@ private:
 
 
 
+	GLuint m_TextureSandboxShader = 0;
+	GLuint m_TextureSandboxVBO = 0;
+	float m_TextureSandboxTime = 0;
 
 	GLuint m_RGBTexture = 0;
 };

@@ -33,9 +33,19 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	// 셰이더 2개 생성 후 컴파일
 	// 사용 셰이더 바꾸기
  
-	m_FSSandBoxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.fs");
+	//m_FSSandBoxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.fs");
+	//m_GridMeshShader = CompileShaders("./Shaders/GridMesh.vs", "./Shaders/GridMesh.fs");
 
-	m_GridMeshShader = CompileShaders("./Shaders/GridMesh.vs", "./Shaders/GridMesh.fs");
+
+
+
+
+	m_TextureSandboxShader = CompileShaders("./Shaders/TextureBox.vs", "./Shaders/TextureBox.fs");
+
+
+
+
+
 
 	// 2개
 	// CreateParticleCloud(10000);
@@ -143,6 +153,8 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_FSSandboxVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(FSSandboxVerts), FSSandboxVerts, GL_STATIC_DRAW);
 }
+
+
 
 void Renderer::CreateGridMesh(int x, int y)
 {
@@ -754,12 +766,68 @@ void Renderer::DrawGridMesh()
 	glDisableVertexAttribArray(attribPosition);
 }
 
+void Renderer::DrawTextureSandbox()
+{
+	GLuint shader = m_TextureSandboxShader;
+
+	glUseProgram(shader);
+
+	GLuint stride = sizeof(float) * 3;
+
+
+	int ulTime = glGetUniformLocation(shader, "u_Time");
+	glUniform1f(ulTime, m_TextureSandboxTime);
+	m_TextureSandboxTime += 0.016f;	// 프레임 타임 : 정확하진 않음
+
+
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glBindBuffer(GL_ARRAY_BUFFER, m_TextureSandboxVBO);
+	glVertexAttribPointer(attribPosition,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		stride, 0);
+
+	int attribTexture = glGetAttribLocation(shader, "a_Texture");
+	glEnableVertexAttribArray(attribTexture);
+	glBindBuffer(GL_ARRAY_BUFFER, m_TextureSandboxVBO);
+	glVertexAttribPointer(attribTexture,
+		2,
+		GL_FLOAT,
+		GL_FALSE,
+		stride, 0);
+
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
 
 
 
 GLuint Renderer::CreatePngTexture(char* filePath, GLuint samplingMethod)
 
 {
+	float size = 0.5f;
+
+	float TextureBox[] =
+	{
+		-size, -size, 0,
+		 size,  size, 0,
+		-size,  size, 0,
+
+		 size,  size, 0,
+		 size, -size, 0,
+		-size, -size, 0
+	};
+
+	glGenBuffers(1, &m_TextureSandboxVBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_TextureSandboxVBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(TextureBox), TextureBox, GL_STATIC_DRAW);
+
 
 	//Load Png
 
@@ -801,4 +869,13 @@ GLuint Renderer::CreatePngTexture(char* filePath, GLuint samplingMethod)
 
 	return temp;
 
+
+
+
+
+
+
+	
 }
+
+
