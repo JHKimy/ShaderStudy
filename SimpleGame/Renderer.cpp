@@ -538,7 +538,70 @@ void Renderer::CreateParticleCloud(int numParticles)
 	delete[] vertices;
 }
 
+GLuint Renderer::CreatePngTexture(char* filePath, GLuint samplingMethod)
+{
+	float size = 0.5f;
 
+	float TextureBox[] =
+	{
+		-size,	size,0,		0,0,
+		 -size, -size,0,	0,1,
+		size,	size, 0,	1,0,
+
+		 size,  size, 0,	1,0,
+		 -size, -size,0,	0,1,
+		 size, -size, 0,	1,1
+	};
+
+	glGenBuffers(1, &m_TextureSandboxVBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_TextureSandboxVBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(TextureBox), TextureBox, GL_STATIC_DRAW);
+
+
+	//Load Png
+
+	std::vector<unsigned char> image;
+
+	unsigned width, height;
+
+	unsigned error = lodepng::decode(image, width, height, filePath);
+
+	if (error != 0)
+
+	{
+
+		std::cout << "PNG image loading failed:" << filePath << std::endl;
+
+		//assert(0);
+
+	}
+
+
+
+	GLuint temp;
+
+	glGenTextures(1, &temp);
+
+	glBindTexture(GL_TEXTURE_2D, temp);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+
+		GL_UNSIGNED_BYTE, &image[0]);
+
+
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, samplingMethod);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, samplingMethod);
+
+
+
+	return temp;
+
+
+}
 
 
 
@@ -772,13 +835,17 @@ void Renderer::DrawTextureSandbox()
 
 	glUseProgram(shader);
 
-	GLuint stride = sizeof(float) * 3;
+	GLuint stride = sizeof(float) * 5;
 
 
 	int ulTime = glGetUniformLocation(shader, "u_Time");
 	glUniform1f(ulTime, m_TextureSandboxTime);
 	m_TextureSandboxTime += 0.016f;	// 프레임 타임 : 정확하진 않음
 
+	int ulSampler = glGetUniformLocation(shader, "u_Texture");
+	glUniform1f(ulSampler, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_RGBTexture);
 
 
 	int attribPosition = glGetAttribLocation(shader, "a_Position");
@@ -797,85 +864,12 @@ void Renderer::DrawTextureSandbox()
 		2,
 		GL_FLOAT,
 		GL_FALSE,
-		stride, 0);
+		stride, (GLvoid*)(sizeof(float) * 3));
 
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 
-
-
-GLuint Renderer::CreatePngTexture(char* filePath, GLuint samplingMethod)
-
-{
-	float size = 0.5f;
-
-	float TextureBox[] =
-	{
-		-size, -size, 0,
-		 size,  size, 0,
-		-size,  size, 0,
-
-		 size,  size, 0,
-		 size, -size, 0,
-		-size, -size, 0
-	};
-
-	glGenBuffers(1, &m_TextureSandboxVBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_TextureSandboxVBO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(TextureBox), TextureBox, GL_STATIC_DRAW);
-
-
-	//Load Png
-
-	std::vector<unsigned char> image;
-
-	unsigned width, height;
-
-	unsigned error = lodepng::decode(image, width, height, filePath);
-
-	if (error != 0)
-
-	{
-
-		std::cout << "PNG image loading failed:" << filePath << std::endl;
-
-		//assert(0);
-
-	}
-
-
-
-	GLuint temp;
-
-	glGenTextures(1, &temp);
-
-	glBindTexture(GL_TEXTURE_2D, temp);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
-
-		GL_UNSIGNED_BYTE, &image[0]);
-
-
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, samplingMethod);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, samplingMethod);
-
-
-
-	return temp;
-
-
-
-
-
-
-
-	
-}
 
 
