@@ -43,6 +43,11 @@ private:
 	
 	void CreateGridMesh(int x, int y);
 
+
+
+	GLuint CreatePngTexture(char* filePath, GLuint samplingMethod);
+
+
 	bool m_Initialized = false;
 	
 	unsigned int m_WindowSizeX = 0;
@@ -72,4 +77,11 @@ private:
 	GLuint m_GridMeshVBO = 0;
 	GLuint m_GridMeshVertexCount = 0;
 	float m_GridMeshTime = 0;
+
+
+
+
+
+
+	GLuint m_RGBTexture = 0;
 };

@@ -7,6 +7,7 @@
 
 #include "stdafx.h"
 #include "Renderer.h"
+#include "LoadPng.h"
 
 Renderer::Renderer(int windowSizeX, int windowSizeY)
 {
@@ -36,15 +37,26 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 
 	m_GridMeshShader = CompileShaders("./Shaders/GridMesh.vs", "./Shaders/GridMesh.fs");
 
+	// 2°³
+	// CreateParticleCloud(10000);
+
 	//Create VBOs
 	CreateVertexBufferObjects();
 
-
-
 	CreateGridMesh(32, 32);
 
-	// 2°³
-	// CreateParticleCloud(10000);
+
+
+
+
+
+
+	m_RGBTexture = CreatePngTexture("./rgb.png", GL_NEAREST);
+
+
+
+
+
 
 	if (m_SolidRectShader > 0 && m_VBORect > 0)
 	{
@@ -740,4 +752,53 @@ void Renderer::DrawGridMesh()
 	glDrawArrays(GL_LINE_STRIP, 0, m_GridMeshVertexCount);
 
 	glDisableVertexAttribArray(attribPosition);
+}
+
+
+
+
+GLuint Renderer::CreatePngTexture(char* filePath, GLuint samplingMethod)
+
+{
+
+	//Load Png
+
+	std::vector<unsigned char> image;
+
+	unsigned width, height;
+
+	unsigned error = lodepng::decode(image, width, height, filePath);
+
+	if (error != 0)
+
+	{
+
+		std::cout << "PNG image loading failed:" << filePath << std::endl;
+
+		//assert(0);
+
+	}
+
+
+
+	GLuint temp;
+
+	glGenTextures(1, &temp);
+
+	glBindTexture(GL_TEXTURE_2D, temp);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+
+		GL_UNSIGNED_BYTE, &image[0]);
+
+
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, samplingMethod);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, samplingMethod);
+
+
+
+	return temp;
+
 }
