@@ -4,6 +4,8 @@ layout(location = 0) out vec4 FragColor;
 
 
 uniform sampler2D u_Texture;
+uniform sampler2D u_NumberTexture[10];
+uniform sampler2D u_NumbersTexture;
 uniform float u_Time;
 
 in vec2 v_TexPos;
@@ -77,10 +79,38 @@ void P5()
 	FragColor = texture(u_Texture, newTexPos);
 }
 
+void P6()
+{
+	vec2 newTexPos;
+
+	float tx = v_TexPos.x ;
+	float ty = v_TexPos.y;
+	newTexPos = vec2(tx,ty);
+
+	int texID = int(u_Time)%10;
+
+	FragColor = texture(u_NumberTexture[texID], newTexPos);
+}
+
+void P7()
+{
+	vec2 newTexPos;
+	float xResol = 5;
+	float yResol = 2;
+	float id = 5;
+	float indexX = float(int(id)%int(xResol));
+	float indexY = floor(id/xResol);	// 0 ~ 5 : 0 / 5 ~ : 1
+	float tx = v_TexPos.x/xResol + indexX * (1/xResol);	
+	float ty = v_TexPos.y/yResol + indexY * (1/yResol);	
+	newTexPos = vec2(tx,ty);
+
+	FragColor = texture(u_NumbersTexture, newTexPos);
+}
+
 void main()
 {
 	
-	P5();
+	P7();
 	
 }
 
