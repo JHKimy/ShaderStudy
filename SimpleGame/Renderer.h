@@ -90,6 +90,5 @@ private:
 	GLuint m_TextureSandboxShader = 0;
 	GLuint m_TextureSandboxVBO = 0;
 	float m_TextureSandboxTime = 0;
-
 	GLuint m_RGBTexture = 0;
 };

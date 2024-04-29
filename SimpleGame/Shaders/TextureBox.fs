@@ -4,7 +4,7 @@ layout(location = 0) out vec4 FragColor;
 
 
 uniform sampler2D u_Texture;
-
+uniform float u_Time;
 
 in vec2 v_TexPos;
 
@@ -28,10 +28,59 @@ void P2()
 	FragColor = texture(u_Texture, newTexPos);
 }
 
+void P3()
+{
+	vec2 newTexPos;
+
+	// 주어진 실수 값에서 정수 부분을 제거하고 소수 부분만을 반환
+	// (0 ~ 1) * 3  ->  0 ~ 3  ->  fract  -> 0~0.9999, 0~0.9999, 0~0.9999
+	float tx = fract(v_TexPos.x * 3);
+
+	// floor : 실수 값을 가장 가까운 작은 정수로 내림
+	// (0~1)/3 + 2/3, (0~1)/3 + 1/3, (0~1)/3 +  0/3
+	float ty = v_TexPos.y/3 + (2 - floor(v_TexPos.x * 3))/3;
+	newTexPos = vec2(tx,ty);
+
+	FragColor = texture(u_Texture, newTexPos);
+	// FragColor = vec4 (ty);
+}
+
+void P4()
+{
+	vec2 newTexPos;
+
+	// 주어진 실수 값에서 정수 부분을 제거하고 소수 부분만을 반환
+	// (0 ~ 1) * 3  ->  0 ~ 3  ->  fract  -> 0~0.9999, 0~0.9999, 0~0.9999
+	float tx = fract(v_TexPos.x * 3);
+
+	// floor : 실수 값을 가장 가까운 작은 정수로 내림
+	// (0~1)/3 + 2/3, (0~1)/3 + 1/3, (0~1)/3 +  0/3
+	float ty = v_TexPos.y/3 + floor(v_TexPos.x * 3)/3;
+	newTexPos = vec2(tx,ty);
+
+	FragColor = texture(u_Texture, newTexPos);
+	// FragColor = vec4 (ty);
+}
+
+void P5()
+{
+	vec2 newTexPos;
+
+	float padding = 0.5 + u_Time;
+	float countX = 5;
+	float countY = 5;
+
+	float tx = fract(padding* floor(v_TexPos.y * countY) ) + v_TexPos.x * countX;
+	float ty = fract(v_TexPos.y * countY);
+	newTexPos = vec2(tx,ty);
+
+	FragColor = texture(u_Texture, newTexPos);
+}
+
 void main()
 {
 	
-	P1();
+	P5();
 	
 }
 
