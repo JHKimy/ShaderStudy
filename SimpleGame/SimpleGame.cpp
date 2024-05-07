@@ -17,20 +17,6 @@ but WITHOUT ANY WARRANTY.
 
 Renderer *g_Renderer = NULL;
 
-void RenderScene(void)
-{
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-
-	//// Renderer Test
-	////g_Renderer->DrawSolidRect(0, 0, 0, 4, 1, 0, 1, 1);
-	////g_Renderer->DrawTest();
-	////g_Renderer->DrawParticle();
-	//g_Renderer->DrawParticleCloud();
-
-	//glutSwapBuffers();
-}
-
 // 새로 추가
 void RenderSceneTimer(int value)
 {
@@ -46,9 +32,20 @@ void RenderSceneTimer(int value)
 	//g_Renderer->DrawGridMesh();
 	g_Renderer->DrawTextureSandbox();
 
+	// 더블 버퍼 스왑
 	glutSwapBuffers();
 	glutTimerFunc(16, RenderSceneTimer, 1);
 }
+
+void RenderScene(void)
+{
+	g_Renderer->DrawTotal();
+
+	glutSwapBuffers();
+	glutTimerFunc(16, RenderSceneTimer, 1);
+}
+
+
 
 void Idle(void)
 {

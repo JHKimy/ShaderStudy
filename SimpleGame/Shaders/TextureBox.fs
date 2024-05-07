@@ -110,7 +110,7 @@ void P7()
 void main()
 {
 	
-	P7();
+	P3();
 	
 }
 

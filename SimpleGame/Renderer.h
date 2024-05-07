@@ -94,4 +94,19 @@ private:
 
 	GLuint m_NumberTexture[10];
 	GLuint m_NumbersTexture;
+
+
+
+
+
+	void CreateFBO();
+	GLuint m_A_FBOTexture;
+	
+	GLuint m_A_FBO;
+
+	GLuint m_TextureShader;
+
+public:
+	void DrawTotal();
+	void DrawTexture(float x, float y, float sizeX, float sizeY, GLuint texID);
 };

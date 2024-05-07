@@ -39,6 +39,9 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 
 
 	m_TextureSandboxShader = CompileShaders("./Shaders/TextureBox.vs", "./Shaders/TextureBox.fs");
+	
+	
+	m_TextureShader = CompileShaders("./Shaders/Texture.vs", "./Shaders/Texture.fs");
 
 
 
@@ -65,6 +68,8 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_NumberTexture[9] = CreatePngTexture("./Textures/9.png", GL_NEAREST);
 	m_NumbersTexture = CreatePngTexture("./Textures/numbers.png", GL_NEAREST);
 
+	//Create FBOs
+	CreateFBO();
 
 	if (m_SolidRectShader > 0 && m_VBORect > 0)
 	{
@@ -599,6 +604,70 @@ GLuint Renderer::CreatePngTexture(char* filePath, GLuint samplingMethod)
 	return temp;
 
 
+}
+
+void Renderer::CreateFBO()
+{
+
+	GLuint textureId; glGenTextures(1, &m_A_FBOTexture);
+	glBindTexture(GL_TEXTURE_2D, m_A_FBOTexture);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+	GLuint depthBuffer;
+	glGenRenderbuffers(1, &depthBuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 512, 512);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	glGenFramebuffers(1, &m_A_FBO);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_A_FBOTexture, 0);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
+
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (status != GL_FRAMEBUFFER_COMPLETE) 
+	{
+		std::cout << "Gen FBO failed" << std::endl;
+	}
+}
+
+void Renderer::DrawTotal()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+
+	// Renderer Test
+	//g_Renderer->DrawSolidRect(0, 0, 0, 4, 1, 0, 1, 1);
+	//g_Renderer->DrawTest();
+	//g_Renderer->DrawParticle();
+	//g_Renderer->DrawParticleCloud();
+	glBindFramebuffer(GL_FRAMEBUFFER, m_A_FBO);
+	glViewport(0, 0, 512, 512);
+	DrawFSSandbox();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Renderer::DrawTexture(float x, float y, float sizeX, float sizeY, GLuint texID)
+{
+	GLuint shader = m_TextureShader;
+	glUseProgram(shader);
+	GLuint stride = sizeof(float) * 3;
+
+
+	int ulSampler = glGetUniformLocation(shader, "u_Texture");
+	glUniform1i(ulSampler, 10);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texID);
+
+	int attribPosition = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosition);
+	glBindBuffer(GL_ARRAY_BUFFER, m_TextureVBO);
+	glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 }
 
 

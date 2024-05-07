@@ -3,14 +3,6 @@
   "WorkspaceRootPath": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\TextureBox.fs||{8A5AA6CF-46E3-4520-A70A-7393D15233E9}",
-      "RelativeMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|solutionrelative:SimpleGame\\Shaders\\TextureBox.fs||{8A5AA6CF-46E3-4520-A70A-7393D15233E9}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\TextureBox.vs||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|solutionrelative:SimpleGame\\Shaders\\TextureBox.vs||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|solutionrelative:SimpleGame\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -21,6 +13,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\SimpleGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|solutionrelative:SimpleGame\\SimpleGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\Texture.fs||{8A5AA6CF-46E3-4520-A70A-7393D15233E9}",
+      "RelativeMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|solutionrelative:SimpleGame\\Shaders\\Texture.fs||{8A5AA6CF-46E3-4520-A70A-7393D15233E9}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\Texture.vs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{25179D6C-FA85-4619-8EDB-AC241382F6CA}|SimpleGame\\SimpleGame.vcxproj|solutionrelative:SimpleGame\\Shaders\\Texture.vs||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,43 +30,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 507,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "SimpleGame.cpp",
               "DocumentMoniker": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\SimpleGame.cpp",
               "RelativeDocumentMoniker": "SimpleGame\\SimpleGame.cpp",
               "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\SimpleGame.cpp",
               "RelativeToolTip": "SimpleGame\\SimpleGame.cpp",
-              "ViewState": "AQIAACoAAAAAAAAAAAAAAC0AAAATAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAADwvykAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-27T01:59:37.228Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Renderer.h",
               "DocumentMoniker": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Renderer.h",
               "RelativeDocumentMoniker": "SimpleGame\\Renderer.h",
               "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Renderer.h",
               "RelativeToolTip": "SimpleGame\\Renderer.h",
-              "ViewState": "AQIAAEoAAAAAAAAAAAAowF8AAAAYAAAA",
+              "ViewState": "AQIAAF4AAAAAAAAAAAAuwG4AAABMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-03-27T01:42:00.38Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Renderer.cpp",
               "DocumentMoniker": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Renderer.cpp",
               "RelativeDocumentMoniker": "SimpleGame\\Renderer.cpp",
               "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Renderer.cpp",
               "RelativeToolTip": "SimpleGame\\Renderer.cpp",
-              "ViewState": "AQIAAGwCAAAAAAAAAADwv0wDAAAeAAAA",
+              "ViewState": "AQIAAI8AAAAAAAAAAAAAAJkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-13T03:18:59.383Z",
               "IsPinned": true,
@@ -74,29 +76,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TextureBox.vs",
-              "DocumentMoniker": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\TextureBox.vs",
-              "RelativeDocumentMoniker": "SimpleGame\\Shaders\\TextureBox.vs",
-              "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\TextureBox.vs",
-              "RelativeToolTip": "SimpleGame\\Shaders\\TextureBox.vs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAABAAAA",
+              "DocumentIndex": 4,
+              "Title": "Texture.vs",
+              "DocumentMoniker": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\Texture.vs",
+              "RelativeDocumentMoniker": "SimpleGame\\Shaders\\Texture.vs",
+              "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\Texture.vs",
+              "RelativeToolTip": "SimpleGame\\Shaders\\Texture.vs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-04-24T03:09:50.33Z",
+              "WhenOpened": "2024-05-07T19:19:20.659Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TextureBox.fs",
-              "DocumentMoniker": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\TextureBox.fs",
-              "RelativeDocumentMoniker": "SimpleGame\\Shaders\\TextureBox.fs",
-              "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\TextureBox.fs",
-              "RelativeToolTip": "SimpleGame\\Shaders\\TextureBox.fs",
-              "ViewState": "AQIAAFsAAAAAAAAAAAAAAGUAAAA0AAAA",
+              "DocumentIndex": 3,
+              "Title": "Texture.fs",
+              "DocumentMoniker": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\Texture.fs",
+              "RelativeDocumentMoniker": "SimpleGame\\Shaders\\Texture.fs",
+              "ToolTip": "D:\\5-1\\\uC170\uC774\uB354 \uD504\uB85C\uADF8\uB798\uBC0D\\ShaderStudy\\SimpleGame\\Shaders\\Texture.fs",
+              "RelativeToolTip": "SimpleGame\\Shaders\\Texture.fs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-04-24T03:09:51.638Z",
+              "WhenOpened": "2024-05-07T19:19:21.534Z",
               "IsPinned": true,
               "EditorCaption": ""
             }
