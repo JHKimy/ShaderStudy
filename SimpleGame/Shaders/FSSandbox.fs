@@ -101,6 +101,6 @@ void SinGraph()
 
 void main()
 {
-	SinGraph();	
+	SinGraph();
 }
 

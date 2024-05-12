@@ -2,7 +2,7 @@
 
 in vec3 a_Position;
 
-out vec2 TexPos;
+out vec2 v_Color;
 
 uniform vec2 u_ScreenResol;
 uniform vec2 u_Position;

@@ -55,8 +55,8 @@ private:
 
 	bool m_Initialized = false;
 	
-	unsigned int m_WindowSizeX = 0;
-	unsigned int m_WindowSizeY = 0;
+	unsigned int m_WindowSizeX = 512;
+	unsigned int m_WindowSizeY = 512;
 
 	GLuint m_VBORect = 0;
 	GLuint m_SolidRectShader = 0;
@@ -100,11 +100,25 @@ private:
 
 
 	void CreateFBO();
-	GLuint m_A_FBOTexture;
+	GLuint m_A_FBOTexture0;
+	GLuint m_A_FBOTexture1;
 	
 	GLuint m_A_FBO;
 
 	GLuint m_TextureShader;
+	GLuint m_TextureVBO;
+
+
+	GLuint m_FullRectVBO;
+	GLuint m_AlphaClearShader;
+	void DrawAlphaClear(float r, float g, float b, float a);
+
+	GLuint m_HDRFBO;
+	GLuint m_HDRHighTexture;
+	GLuint m_HDRLowTexture;
+
+	GLuint m_ParticleTexture;
+
 
 public:
 	void DrawTotal();

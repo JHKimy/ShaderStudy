@@ -1,2 +1,29 @@
-﻿  SimpleGame.cpp
-  SimpleGame.vcxproj -> D:\5-1\셰이더 프로그래밍\ShaderStudy\x64\Debug\SimpleGame.exe
+﻿  Renderer.cpp
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(314,21): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(667,56): warning C4244: '인수': 'GLuint'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(669,56): warning C4244: '인수': 'GLuint'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(690,9): error C2086: 'GLuint textureId': 재정의
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(681,9):
+  'textureId' 선언을 참조하십시오.
+  
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(748,26): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(870,6): error C2374: 'ulAcc': 재정의. 여러 번 초기화했습니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(864,6):
+  'ulAcc' 선언을 참조하십시오.
+  
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(874,16): error C2065: 'GL_': 선언되지 않은 식별자입니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  
+D:\5-1\셰이더 프로그래밍\ShaderStudy\SimpleGame\Renderer.cpp(1026,25): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
+  (소스 파일 '/Renderer.cpp'을(를) 컴파일하는 중)
+  
